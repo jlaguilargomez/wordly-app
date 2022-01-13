@@ -3,7 +3,7 @@ import './Game.scss';
 
 import Button from '../../../common/components/Button/Button';
 import Message from '../../../common/components/Message/Message';
-import Panel from '../../molecules/Panel/Panel';
+import Panel from '../../organism/Panel/Panel';
 
 function Game(): JSX.Element {
   return (

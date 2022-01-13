@@ -1,0 +1,24 @@
+.cell{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+  margin: 0 5px;
+  font-size: 3rem;
+  border:0.1px solid black;
+
+
+  &--rightPosition{
+    background: green;
+    color: white;
+  }
+  &--rightLetter{
+    background: orange;
+    color: white;
+  }
+  &--fail{
+    background: gray;
+    color:white
+  }
+}
