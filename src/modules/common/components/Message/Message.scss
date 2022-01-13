@@ -1,0 +1,13 @@
+.message{
+  &--info{
+    color: blue;
+  }
+
+  &--alert{
+    color: red;
+  }
+
+  &--success{
+    color:green;
+  }
+}
