@@ -3,6 +3,7 @@
 ## Resources
 
 - TypeScript
+- SASS
 
 ---
 
