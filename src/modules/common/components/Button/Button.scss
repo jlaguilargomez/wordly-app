@@ -1,0 +1,31 @@
+.btn{
+  width: 100%;
+  padding: 1rem 4rem;
+  margin: 0.5rem;
+  
+  font-size: 1.8rem;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  background: #333;
+  outline: none;
+  box-shadow: 0.5rem 0.4rem rgba(121, 121, 121, 0.65);
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:active{
+    transform: translateY(1px);
+    box-shadow: 0.2rem 0.3rem rgba(77, 77, 77, 0.65);
+  }
+
+  &--confirm{
+    background:green
+  }
+  &--cancel{
+    background: red
+  }
+
+  &--info{
+    background: blue
+  }
+}

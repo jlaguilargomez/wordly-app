@@ -9,3 +9,15 @@
   max-width: 756px;
   font-size: 1.6em;
 }
+
+.btn-wrapper{
+  display: flex;
+  width: auto;
+
+  @media (min-width: 768px) {
+    justify-content: center;
+    align-self: flex-end;
+    margin-right: 3rem;
+  }
+  
+}
