@@ -1,5 +1,6 @@
 import { useContext } from 'react';
-import { IWordlyContext, WordlyContext } from '../context/WordlyContext';
+import { WordlyContext } from '../context/WordlyContext';
+import { IWordlyContext } from '../context/WordlyContext.interfaces';
 
 const useWordlyContext = (): IWordlyContext => useContext(WordlyContext);
 
