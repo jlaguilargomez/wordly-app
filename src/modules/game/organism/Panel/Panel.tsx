@@ -6,10 +6,8 @@ import Word from '../../molecules/Word/Word';
 function Panel(): JSX.Element {
   return (
     <div className="panel">
-      <Word />
-      <Word />
-      <Word />
-      <Word />
+      <Word text="COSA" />
+      <Word text="PENES" />
     </div>
   );
 }
