@@ -1,56 +1,85 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
-import React, { createContext, useEffect, useMemo, useState } from 'react';
-import {
-  IWordlyContext,
-  IWordlyProvider,
-  ServerData,
-} from './WordlyContext.interfaces';
+import React, {
+  createContext,
+  Dispatch,
+  useEffect,
+  useMemo,
+  useReducer,
+  ReactNode,
+} from 'react';
 
-interface Target {
-  [key: number]: string;
+import wordlyReducer, {
+  IWordlyReducerAction,
+  IWordlyReducerState,
+} from './WordlyReducers';
+
+export interface IWordlyContext extends IWordlyReducerState {
+  dispatch: Dispatch<IWordlyReducerAction>;
 }
 
-const splitWordIntoValues = (word: string): Target => {
-  const listOfValues = word.toUpperCase().split('');
+interface IWordlyProviderProps {
+  children: ReactNode;
+}
 
-  return listOfValues.reduce(
-    (acc, curr, i) => Object.assign(acc, { [i]: curr }),
-    {}
-  );
-};
+interface ServerData {
+  value: string;
+}
+
+// const splitWordIntoArray = (word: string): Array<string> =>
+//   word.toUpperCase().split('');
+
+// const getGameTarget = (word: string): IGameTarget => {
+//   console.log('😎');
+
+//   return splitWordIntoArray(word).reduce(
+//     (acc, curr, i) => Object.assign(acc, { [i]: curr }),
+//     {}
+//   );
+// };
+
+// const setInitialGameStatus = (word: string): Array<IWord> => {
+//   console.log('🤖');
+//   const firstLetters: Array<CellStatus> = splitWordIntoArray(word).map(() => ({
+//     value: '',
+//     state: 'notEval',
+//   }));
+
+//   return [
+//     {
+//       id: 0,
+//       isWordEnabled: true,
+//       letters: firstLetters,
+//     },
+//   ];
+// };
 
 export const WordlyContext = createContext<IWordlyContext>(
   {} as IWordlyContext
 );
 
-const initialStatus: IWordlyContext = {
-  wordToDiscover: '',
-  numOfValues: 4,
-  gameStatus: [],
-};
+export function WordlyProvider({
+  children,
+}: IWordlyProviderProps): JSX.Element {
+  const initialState: IWordlyReducerState = {
+    gameTarget: {},
+    gameStatus: [],
+  };
 
-export function WordlyProvider({ children }: IWordlyProvider): JSX.Element {
-  const [gameConfig, setGameConfig] = useState<IWordlyContext>(initialStatus);
+  const [state, dispatch] = useReducer(wordlyReducer, initialState);
 
   useEffect(() => {
     const fetchServerWord = async (): Promise<void> => {
       const res = await fetch('http://localhost:5000/word');
       const data: ServerData = await res.json();
 
-      setGameConfig((prevValue) => ({
-        ...prevValue,
-        wordToDiscover: data.value,
-      }));
+      console.log(data);
     };
 
     fetchServerWord();
   }, []);
-  console.log('context!');
-
-  const contextValue = useMemo(() => gameConfig, []);
 
   return (
-    <WordlyContext.Provider value={contextValue}>
+    <WordlyContext.Provider value={{ ...state, dispatch }}>
       {children}
     </WordlyContext.Provider>
   );

@@ -1,35 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent } from 'react';
+
+import { IWord } from '../../../../context/WordlyReducers';
+import CellStatus from '../../../../interfaces/CellStatus';
+import CellInput from '../../atoms/CellInput/CellInput';
 import './Word.scss';
 
-import CellInput from '../../atoms/CellInput/CellInput';
-import useWordlyContext from '../../../../hooks/useWordlyContext';
-
-interface IWord {
-  text: string;
+interface IWordComponent {
+  word: IWord;
 }
 
-const splitIntoLetters = (word: string): Array<string> =>
-  word.toUpperCase().split('');
-
-function Word({ text }: IWord): JSX.Element {
-  const [isWordEnabled, setIsWordEnabled] = useState<boolean>(true);
+function Word({ word }: IWordComponent): JSX.Element {
   // ! CONSIDERA EL USO DE USEEFFECTLAYOUT
-  const [letters, setLetters] = useState<Array<any>>([]);
 
-  const { numOfValues } = useWordlyContext();
-  console.log(numOfValues);
-
-  useEffect(() => {
-    setLetters(splitIntoLetters(text));
-  }, []);
-
-  const handleCellChange = (event: any): void => {
+  const handleCellChange = (event: ChangeEvent<HTMLInputElement>): void => {
     console.log(event);
   };
 
   return (
     <div className="word">
-      {isWordEnabled ? <p>WordEnabled</p> : <p>Word disabled</p>}
+      {word.isWordEnabled
+        ? word.letters.map((letter: CellStatus, index: number) => (
+            <CellInput
+              // eslint-disable-next-line react/no-array-index-key
+              key={`${letter}-${index}`}
+              cellValue={letter.value}
+              onHandleChange={handleCellChange}
+            />
+          ))
+        : word.letters.map(() => <p>Holla</p>)}
     </div>
   );
 }

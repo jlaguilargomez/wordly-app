@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import './CellInput.scss';
 
 interface ICellInput {
   cellValue?: string;
-  onHandleChange: (event: any) => void;
+  onHandleChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 function CellInput({
